@@ -1,0 +1,21 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ${{ vars.RUNNER || 'ubuntu-latest' }}
+    container:
+      image: ghcr.io/reseam/ci:2026.10.19
+    env:
+      RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
+      DOKPLOY_WEBHOOK: ${{ secrets.DOKPLOY_WEBHOOK }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - run: just release

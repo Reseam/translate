@@ -1,0 +1,6 @@
+build/
+models/
+*.reseam
+*.reseam.tmp.*
+root/
+dist/
