@@ -1,4 +1,4 @@
-reseam_version := "0.28.0"
+reseam_version := "0.42.2"
 
 check:
     cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
