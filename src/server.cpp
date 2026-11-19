@@ -150,6 +150,8 @@ int main(int argc, char **argv) {
 
   httplib::Server server;
   server.new_task_queue = [&] { return new httplib::ThreadPool(size_t(s.httpThreads)); };
+  // Without it every reply on a kept-alive connection waits ~40 ms for the client's delayed ACK.
+  server.set_tcp_nodelay(true);
   // JSON may escape every character as \uXXXX (6 bytes per 2-byte character, 12 per emoji), so
   // allow 6x here; the decoded text is held to maxChars below.
   server.set_payload_max_length(s.maxChars * 6 + 4096);
